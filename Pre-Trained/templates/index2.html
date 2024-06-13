@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Speech to Text Conversion</title>
+    <style>
+      #head {
+        text-align: center;
+        font-family: "Times New Roman", Times, serif;
+        font-size: 35px;
+        padding: 10px;
+        cursor: pointer;
+      }
+
+      .cont1 {
+        width: 100;
+        height: auto;
+        display: flex;
+        flex-direction: row;
+      }
+      .sub1,
+      .sub2 {
+        width: 50%;
+        height: 450px;
+        padding: 10px;
+        text-align: center;
+      }
+      .sub1 {
+        border: 2px double black;
+      }
+      .sub2 {
+        border-top: 2px solid black;
+        border-right: 2px solid black;
+        border-bottom: 2px solid black;
+      }
+      #text,
+      #res {
+        text-align: center;
+        font-style: italic;
+        font-size: 35px;
+        font-weight: bold;
+        margin-bottom: 60px;
+        cursor: pointer;
+      }
+
+      #submit {
+        width: 100px;
+        height: 45px;
+        border-radius: 15px;
+        font-size: 22px;
+        cursor: pointer;
+        border: none;
+        color: white;
+        background-color: #01030b;
+        font-family: "Times New Roman", Times, serif;
+        margin-top: 25px;
+      }
+      .aud {
+        margin-top: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        border-radius: 50px;
+      }
+
+      #audioInput {
+        font-family: "Times New Roman", Times, serif;
+        font-size: 18px;
+        background: rgb(238, 243, 249);
+        border-radius: 50px;
+        padding: 5px;
+        cursor: pointer;
+        margin-top: 20px;
+      }
+      ::-webkit-file-upload-button {
+        font-family: "Times New Roman", Times, serif;
+        font-size: 18px;
+        color: white;
+        background: #03050b;
+        padding: 8px;
+        cursor: pointer;
+        border-radius: 50px;
+        outline: none;
+        border: none;
+      }
+      #fileLabel {
+        font-size: 25px;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="cont2">
+      <h3 id="head">SPEECH TO TEXT CONVERSION - Pre-Trained</h3>
+      <br />
+      <div class="cont1">
+        <div class="sub1">
+          <p id="text">Input Audio File</p>
+          <br />
+          <form method="POST" enctype="multipart/form-data">
+            <label for="audioInput" id="fileLabel">Choose Audio File</label>
+            <br />
+            <input type="file" id="audioInput" name="audio" accept="audio/*" />
+            <br />
+            <div class="aud">
+              <audio controls id="audioPlayer" style="display: none"></audio>
+            </div>
+            <br />
+            <button type="submit" id="submit">Submit</button>
+          </form>
+          <br />
+        </div>
+        <div class="sub2">
+          <p id="res">Results</p>
+          <div class="result">
+            {% if error %}
+            <p style="color: red">{{ error }}</p>
+            {% elif result %}
+            <p>{{ result }}</p>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      document
+        .getElementById("audioInput")
+        .addEventListener("change", function (e) {
+          const file = e.target.files[0];
+          console.log(file);
+          const audioPlayer = document.getElementById("audioPlayer");
+          audioPlayer.src = URL.createObjectURL(file);
+          audioPlayer.style.display = "block";
+        });
+    </script>
+  </body>
+</html>
